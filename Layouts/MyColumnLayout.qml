@@ -5,7 +5,6 @@ Item {
     id: root
 
     function updateModel(index, value) {
-        console.log(index, value)
         if (_.currentItem === 0) {
             item1.model[index].value = value;
             item1.Layout.minimumWidth = Qt.binding(function() { return item1.model[0].value; })
@@ -47,9 +46,11 @@ Item {
 
     Row {
         anchors.fill: parent
+        spacing: 20
 
         ColumnLayout {
-            height: parent.height; width: parent.width - properties.width
+            height: parent.height
+            width: parent.width - properties.width - parent.spacing
 
             Rectangle {
                 id: item1
@@ -57,34 +58,42 @@ Item {
                 property var model: [
                     {
                         label: "Layout.minimumWidth",
+                        type: 0,
                         value: 50
                     },
                     {
                         label: "Layout.minimumHeight",
+                        type: 0,
                         value: -1
                     },
                     {
                         label: "Layout.preferredWidth",
+                        type: 0,
                         value: 200
                     },
                     {
                         label: "Layout.preferredHeight",
+                        type: 0,
                         value: 200
                     },
                     {
                         label: "Layout.maximumWidth",
+                        type: 0,
                         value: -1
                     },
                     {
                         label: "Layout.maximumHeight",
+                        type: 0,
                         value: -1
                     },
                     {
                         label: "Layout.fillWidth",
+                        type: 1,
                         value: false
                     },
                     {
                         label: "Layout.fillHeight",
+                        type: 1,
                         value: false
                     }
                 ]
@@ -215,16 +224,14 @@ Item {
         Rectangle {
             id: properties
 
-            height: parent.height; width: 200
-            border {
-                width: 4
-                color: {
-                    if (_.currentItem === 0)
-                        return item1.color;
-                    if (_.currentItem === 1)
-                        return item2.color;
-                    return item3.color;
-                }
+            height: parent.height
+            width: 200
+            color: {
+                if (_.currentItem === 0)
+                    return item1.color;
+                if (_.currentItem === 1)
+                    return item2.color;
+                return item3.color;
             }
 
             ListView {
@@ -247,7 +254,6 @@ Item {
                     height: propertiesModel.height/propertiesModel.count
 
                     Rectangle {
-                        border.width: 1
                         radius: 5
                         anchors {
                             fill: parent
@@ -263,7 +269,7 @@ Item {
 
                                 Text {
                                     anchors.fill: parent
-                                    font.pixelSize: 11
+                                    font.pixelSize: 16
                                     text: del.modelData.label
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
@@ -273,14 +279,44 @@ Item {
                                 width: parent.width; height: (parent.height-parent.spacing)/2
 
                                 TextInput {
+                                    visible: del.modelData.type === 0
                                     anchors.fill: parent
-                                    font.pixelSize: 11
+                                    font {
+                                        pixelSize: 24
+                                        bold: true
+                                    }
                                     text: del.modelData.value
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
                                     onAccepted: {
                                         del.modelData.value = text;
                                         root.updateModel(del.index, text)
+                                    }
+                                }
+
+                                Rectangle {
+                                    visible: del.modelData.type === 1
+                                    anchors.fill: parent
+                                    anchors.margins: 10
+                                    color: del.modelData.value ? "lightgray" : "white"
+
+                                    Text {
+                                        anchors.fill: parent
+                                        text: del.modelData.value
+                                        font {
+                                            pixelSize: 24
+                                            bold: true
+                                        }
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                    }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            del.modelData.value = !del.modelData.value;
+                                            root.updateModel(del.index, del.modelData.value)
+                                        }
                                     }
                                 }
                             }

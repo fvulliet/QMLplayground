@@ -31,7 +31,6 @@ Window {
                     color: "black"
                     visible: input.activeFocus
                 }
-                onTextChanged: console.log("-----text", text)
             }
         }
         Row {
