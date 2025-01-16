@@ -16,7 +16,13 @@ qt_add_qml_module(appMapToItem
     URI MapToItem
     VERSION 1.0
     QML_FILES
+        Collisions.qml
+        Coordinates.qml
+        DragDrop.qml
+        Header.qml
+        Inputs.qml
         Main.qml
+        Popups.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
