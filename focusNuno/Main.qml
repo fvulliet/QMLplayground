@@ -1,20 +1,33 @@
 import QtQuick
 
 Window {
+    id: root
     width: 640
     height: 480
     visible: true
     title: qsTr("focus nuno")
 
-    onActiveFocusItemChanged: console.log("-----", activeFocusItem.objectName)
-
     Loader {
-        anchors.fill: parent
         objectName: "loader"
-        focus: true
+        anchors.fill: parent
+        focus: true // this is required so that the focus can be given to the loaded component (be it loaded with source or sourceComponent)
         source: Qt.resolvedUrl("./Toto.qml")
         //sourceComponent: toto
-        onLoaded: item.focus = true
+        onLoaded: {
+            item.focus = true // this is required so that the focus can be given to the loaded component (be it loaded with source or sourceComponent)
+        }
+    }
+
+    Rectangle {
+        anchors.fill: activeFocusTxt
+        color: "white"
+    }
+
+    Text {
+        id: activeFocusTxt
+        text: root.activeFocusItem.objectName
+        font.pixelSize: 40
+        anchors.centerIn: parent
     }
 
     Component {
@@ -23,15 +36,21 @@ Window {
             //focus: true
             objectName: "FC"
             Rectangle {
-                id: top
-                objectName: "rect1"
+                id: red
+                objectName: "redRect"
                 width: parent.width
                 height: parent.height/2
                 color: "red"
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: red.focus = true;
+                }
             }
             Rectangle {
-                objectName: "rect2"
-                anchors.top: top.bottom
+                id: blue
+                objectName: "blueRect"
+                anchors.top: red.bottom
                 width: parent.width
                 height: parent.height/2
                 color: "blue"
@@ -39,7 +58,7 @@ Window {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: top.focus = true;
+                    onClicked: blue.focus = true;
                 }
             }
         }

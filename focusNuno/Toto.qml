@@ -1,18 +1,23 @@
 import QtQuick
 
 FocusScope {
-    //focus: true
     objectName: "totoFC"
     Rectangle {
-        id: top
-        objectName: "totorect1"
+        id: red
+        objectName: "redRect"
         width: parent.width
         height: parent.height/2
         color: "red"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: red.focus = true;
+        }
     }
     Rectangle {
-        objectName: "totorect2"
-        anchors.top: top.bottom
+        id: blue
+        objectName: "blueRect"
+        anchors.top: red.bottom
         width: parent.width
         height: parent.height/2
         color: "blue"
@@ -20,7 +25,7 @@ FocusScope {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: top.focus = true;
+            onClicked: blue.focus = true;
         }
     }
 }
