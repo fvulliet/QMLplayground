@@ -48,7 +48,7 @@ Window {
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            text: "toggle B loader\nvisibility"
+                            text: "toggle BLUE loader\nvisibility"
 
                             MouseArea {
                                 anchors.fill: parent
@@ -71,7 +71,7 @@ Window {
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            text: "toggle Y loader\nvisibility"
+                            text: "toggle YELLOW loader\nvisibility"
 
                             MouseArea {
                                 anchors.fill: parent
@@ -94,7 +94,7 @@ Window {
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            text: "toggle B loadee\nvisibility"
+                            text: "toggle BLUE loadee\nvisibility"
 
                             MouseArea {
                                 anchors.fill: parent
@@ -117,7 +117,7 @@ Window {
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            text: "toggle Y loadee\nvisibility"
+                            text: "toggle YELLOW loadee\nvisibility"
 
                             MouseArea {
                                 anchors.fill: parent
@@ -135,7 +135,7 @@ Window {
             Loader {
                 id: loaderBlue
                 height: parent.height
-                width: parent.width/2
+                width: parent.width/3
                 sourceComponent: Rectangle {
                     color: "blue"
                 }
@@ -143,9 +143,17 @@ Window {
             Loader {
                 id: loaderYellow
                 height: parent.height
-                width: parent.width/2
+                width: parent.width/3
                 sourceComponent: Rectangle {
                     color: "yellow"
+                }
+            }
+            Loader {
+                id: loaderRed
+                height: parent.height
+                width: parent.width/3
+                sourceComponent: Rectangle {
+                    color: "red"
                 }
             }
         }
