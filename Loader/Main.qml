@@ -7,155 +7,75 @@ Window {
     visible: true
     title: qsTr("Loader")
 
-    function toggleBlueLoader() {
-        loaderBlue.visible = !loaderBlue.visible;
-    }
-
-    function toggleYellowLoader() {
-        loaderYellow.visible = !loaderYellow.visible;
-    }
-
-    function toggleBlueLoadee() {
-        loaderBlue.item.visible = !loaderBlue.item.visible;
-    }
-
-    function toggleYellowLoadee() {
-        loaderYellow.item.visible = !loaderYellow.item.visible;
+    QtObject {
+        id: _
+        property int currentSelection: 0
     }
 
     Column {
         anchors.fill: parent
+        spacing: 20
 
-        Rectangle {
-            id: top
-            width: parent.width
-            height: 100
+        Row {
+            id: header
+            width: parent.width; height: 100
 
-            Row {
-                anchors.fill: parent
+            Rectangle {
+                height: parent.height; width: parent.width/3
+                color: _.currentSelection === 0 ? "#E1E2EC" : "white"
 
-                Item {
-                    height: parent.height
-                    width: parent.width/4
-
-                    Rectangle {
-                        height: parent.height-2*10
-                        width: height*2
-                        anchors.centerIn: parent
-                        color: "lightGray"
-
-                        Text {
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "toggle BLUE loader\nvisibility"
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: root.toggleBlueLoader()
-                            }
-                        }
-                    }
+                HeaderMenu {
+                    width: parent.width/3; height: parent.height/2
+                    label: "visibility"
+                    anchors.centerIn: parent
+                    selected: _.currentSelection === 0
+                    onClicked: _.currentSelection = 0
                 }
-                Item {
-                    height: parent.height
-                    width: parent.width/4
+            }
+            Rectangle {
+                height: parent.height; width: parent.width/3
+                color: _.currentSelection === 1 ? "#E1E2EC" : "white"
 
-                    Rectangle {
-                        height: parent.height-2*10
-                        width: height*2
-                        anchors.centerIn: parent
-                        color: "lightGray"
-
-                        Text {
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "toggle YELLOW loader\nvisibility"
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: root.toggleYellowLoader()
-                            }
-                        }
-                    }
+                HeaderMenu {
+                    width: parent.width/3; height: parent.height/2
+                    label: "focus"
+                    anchors.centerIn: parent
+                    selected: _.currentSelection === 1
+                    onClicked: _.currentSelection = 1
                 }
-                Item {
-                    height: parent.height
-                    width: parent.width/4
+            }
+            Rectangle {
+                height: parent.height; width: parent.width/3
+                color: _.currentSelection === 2 ? "#E1E2EC" : "white"
 
-                    Rectangle {
-                        height: parent.height-2*10
-                        width: height*2
-                        anchors.centerIn: parent
-                        color: "lightGray"
-
-                        Text {
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "toggle BLUE loadee\nvisibility"
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: root.toggleBlueLoadee()
-                            }
-                        }
-                    }
-                }
-                Item {
-                    height: parent.height
-                    width: parent.width/4
-
-                    Rectangle {
-                        height: parent.height-2*10
-                        width: height*2
-                        anchors.centerIn: parent
-                        color: "lightGray"
-
-                        Text {
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "toggle YELLOW loadee\nvisibility"
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: root.toggleYellowLoadee()
-                            }
-                        }
-                    }
+                HeaderMenu {
+                    width: parent.width/3; height: parent.height/2
+                    label: "size"
+                    anchors.centerIn: parent
+                    selected: _.currentSelection === 2
+                    onClicked: _.currentSelection = 2
                 }
             }
         }
-        Row {
-            width: parent.width
-            height: parent.height - top.height
+
+        Item {
+            width: parent.width; height: parent.height - parent.spacing - header.height
 
             Loader {
-                id: loaderBlue
-                height: parent.height
-                width: parent.width/3
-                sourceComponent: Rectangle {
-                    color: "blue"
+                anchors {
+                    fill: parent
+                    margins: 10
                 }
-            }
-            Loader {
-                id: loaderYellow
-                height: parent.height
-                width: parent.width/3
-                sourceComponent: Rectangle {
-                    color: "yellow"
-                }
-            }
-            Loader {
-                id: loaderRed
-                height: parent.height
-                width: parent.width/3
-                sourceComponent: Rectangle {
-                    color: "red"
+                focus: true
+                source: {
+                    if (_.currentSelection === 0)
+                        return Qt.resolvedUrl("./Page1.qml");
+                    else if (_.currentSelection === 1)
+                        return Qt.resolvedUrl("./Page2.qml");
+                    return Qt.resolvedUrl("./Page3.qml");
                 }
             }
         }
     }
+
 }
