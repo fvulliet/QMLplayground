@@ -20,10 +20,15 @@ qt_add_qml_module(appLayouts
     VERSION 1.0
     QML_FILES
         Main.qml
-        HeaderMenu.qml
-        MyColumnLayout.qml
-        MyGridLayout.qml
-        MyRowLayout.qml
+        MenuBar.qml
+        Page1.qml
+        Page2.qml
+        Page3.qml
+        Page4.qml
+        Page5.qml
+        SizedTile.qml
+        Tile.qml
+        WIP.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
