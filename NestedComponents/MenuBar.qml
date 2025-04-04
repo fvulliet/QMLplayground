@@ -78,48 +78,4 @@ Rectangle {
             }
         }
     }
-
-    // Rectangle {
-    //     id: navPrevious
-    //     height: parent.height/2; width: list.itemWidth/5
-    //     visible: list.interactive
-    //     color: "white"
-    //     anchors.left: parent.left
-    //     anchors.leftMargin: parent.border.width
-    //     anchors.verticalCenter: parent.verticalCenter
-
-    //     Text {
-    //         anchors.fill: parent
-    //         horizontalAlignment: Text.AlignHCenter
-    //         verticalAlignment: Text.AlignVCenter
-    //         text: "<"
-    //     }
-
-    //     MouseArea {
-    //         anchors.fill: parent
-    //         onClicked: list.previous()
-    //     }
-    // }
-
-    // Rectangle {
-    //     id: navNext
-    //     height: parent.height/2; width: list.itemWidth/5
-    //     visible: list.interactive
-    //     color: "white"
-    //     anchors.right: parent.right
-    //     anchors.rightMargin: parent.border.width
-    //     anchors.verticalCenter: parent.verticalCenter
-
-    //     Text {
-    //         anchors.fill: parent
-    //         horizontalAlignment: Text.AlignHCenter
-    //         verticalAlignment: Text.AlignVCenter
-    //         text: ">"
-    //     }
-
-    //     MouseArea {
-    //         anchors.fill: parent
-    //         onClicked: list.next()
-    //     }
-    // }
 }

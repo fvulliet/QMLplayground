@@ -5,31 +5,15 @@ Window {
 
     property var pages: [
         {
-            label: "ColumnLayout",
+            label: "required property",
             url: "./Page1.qml"
-        },
-        {
-            label: "RowLayout",
-            url: "./Page2.qml"
-        },
-        {
-            label: "GridLayout",
-            url: "./Page3.qml"
-        },
-        {
-            label: "\"TopDown\"",
-            url: "./Page4.qml"
-        },
-        {
-            label: "\"TopDown2\"",
-            url: "./Page5.qml"
         }
     ]
 
     width: 1280
     height: 960
     visible: true
-    title: qsTr("Layouts")
+    title: qsTr("QtObject")
 
     Column {
         anchors.fill: parent
