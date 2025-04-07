@@ -1,80 +1,78 @@
 import QtQuick
 import QtQuick.Controls
 
-Rectangle {
+FocusScope { // needed because one of the children uses 'focus'
     id: root
 
-    property int currentSelection: 0
     property var tabs: []
     property alias orientation: list.orientation
-
-    color: "white"
+    property alias currentSelection: list.currentIndex
 
     Rectangle {
-        width: parent.width
-        color: "black"
-        height: 2
-        anchors.bottom: parent.bottom
-    }
-
-    ListView {
-        id: list
-
-        property int itemWidth: list.width/4
-        property int itemHeight: list.height/6
-        property bool leftReached: contentX <= 0
-        property bool rightReached: (contentX + width) >= (contentWidth - 0.1)
-        property bool topReached: contentY <= 0
-        property bool bottomReached: (contentY + height) >= (contentHeight - 0.1)
-        property int currentPage: orientation === Qt.Horizontal ? Math.ceil(contentX/width) : Math.ceil(contentY/height)
-
-        function previous() {
-            if (root.currentSelection>0)
-                --root.currentSelection;
-        }
-
-        function next() {
-            if (root.currentSelection<(count-1))
-                ++root.currentSelection;
-        }
-
+        color: "white"
         anchors.fill: parent
-        model: root.tabs
-        interactive: orientation === Qt.Horizontal ? contentWidth > list.width : contentHeight > list.height
-        boundsBehavior: ListView.StopAtBounds
-        delegate: Rectangle {
-            id: del
 
-            required property int index
-            required property var modelData
-
-            width: orientation === ListView.Vertical ? ListView.view.width : list.itemWidth
-            height: orientation === ListView.Vertical ? list.itemHeight : ListView.view.height
-            color: root.currentSelection === del.index ? "black" : "transparent"
-
-            Text {
-                anchors.fill: parent
-                font.pixelSize: Math.min(32, height/3)
-                text: del.modelData.label
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                color: root.currentSelection === del.index ? "white" : "black"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: root.currentSelection = del.index
-            }
+        Rectangle {
+            width: orientation === Qt.Horizontal ? parent.width : 2
+            height: orientation === Qt.Horizontal ? 2 : parent.height
+            anchors.bottom: orientation === Qt.Horizontal ? parent.bottom : undefined
+            anchors.right: orientation === Qt.Horizontal ? undefined : parent.right
+            color: "black"
         }
-        ScrollBar.horizontal: ScrollBar {
-            active: list.interactive
-            orientation: list.orientation
-            snapMode: ScrollBar.NoSnap
-            anchors {
-                left: orientation === Qt.Horizontal ? list.left : undefined
-                right: list.right
-                bottom: list.bottom
-                top: orientation === Qt.Horizontal ? undefined : list.top
+
+        ListView {
+            id: list
+
+            property int itemWidth: list.width/4
+            property int itemHeight: list.height/6
+
+            focus: true
+            anchors.fill: parent
+            model: root.tabs
+            interactive: orientation === Qt.Horizontal ? contentWidth > list.width : contentHeight > list.height
+            boundsBehavior: ListView.StopAtBounds
+            delegate: Rectangle {
+                id: del
+
+                required property int index
+                required property var modelData
+
+                width: orientation === ListView.Vertical ? ListView.view.width : list.itemWidth
+                height: orientation === ListView.Vertical ? list.itemHeight : ListView.view.height
+                color: list.currentIndex === index ? "black" : "transparent"
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("click");
+                        list.currentIndex = del.index;
+                    }
+                }
+
+                Text {
+                    anchors.fill: parent
+                    font.pixelSize: Math.min(32, height/3)
+                    text: del.modelData.label
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    color: list.currentIndex === index ? "white" : "black"
+                }
+            }
+            Keys.onLeftPressed: {
+                if (orientation === Qt.Horizontal)
+                    decrementCurrentIndex();
+            }
+            Keys.onRightPressed: {
+                if (orientation === Qt.Horizontal)
+                    incrementCurrentIndex();
+            }
+            Keys.onUpPressed: {
+                if (orientation === Qt.Vertical)
+                    decrementCurrentIndex();
+            }
+            Keys.onDownPressed: {
+                if (orientation === Qt.Vertical)
+                    incrementCurrentIndex();
             }
         }
     }

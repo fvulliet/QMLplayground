@@ -3,6 +3,7 @@ import QtQuick.Layouts
 
 FocusScope {
     id: root
+    objectName: "Page3"
 
     ListModel {
         id: fruitModel
@@ -48,34 +49,51 @@ FocusScope {
 
     RowLayout {
         id: row
-        anchors.fill: parent
-        Component.onCompleted: console.log("-----Page3 RowLayout activeFocus", row.activeFocus)
+        objectName: "Page3_row"
+        anchors {
+            fill: parent
+            margins: 20
+        }
 
         ListView {
             id: fruitList
+            objectName: "fruitlist"
+
+            readonly property int fruitHeight: 60
+
             focus: true
-            Layout.fillHeight: true
-            Layout.preferredWidth: parent.width/3
+            Layout.preferredHeight: count*fruitHeight
+            Layout.preferredWidth: parent.width/4
+            anchors.top: parent.top
             model: fruitModel
             interactive: false
             delegate: Rectangle {
                 id: fruitDel
+                objectName: "fruitDel"
 
                 required property string name
                 required property string fruitColor
                 required property int index
+                property int myBorder: 3
 
-                color: fruitColor
+                border.width: fruitList.currentIndex === index ? myBorder : 0
+                color: "transparent"
                 width: fruitList.width
-                height: 60
-                border.width: fruitList.currentIndex === index ? 3 : 0
+                height: fruitList.fruitHeight
 
-                Text {
-                    id: fruitTxt
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: fruitDel.name
+                Rectangle {
+                    anchors {
+                        fill: parent
+                        margins: fruitDel.myBorder
+                    }
+                    color: fruitDel.fruitColor
+
+                    Text {
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        text: fruitDel.name
+                    }
                 }
 
                 MouseArea {
@@ -83,28 +101,47 @@ FocusScope {
                     onClicked: fruitList.currentIndex = fruitDel.index
                 }
             }
+            Keys.onUpPressed:   decrementCurrentIndex()
+            Keys.onDownPressed: incrementCurrentIndex()
+            KeyNavigation.tab: peopleList
+
+            Rectangle {
+                anchors.fill: fruitList
+                color: "transparent"
+                border {
+                    width: fruitList.activeFocus ? 2 : 0
+                    color: "red"
+                }
+            }
         }
         Item {
+            // spacer
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
         ListView {
             id: peopleList
-            Layout.fillHeight: true
-            Layout.preferredWidth: parent.width/3
+            objectName: "peopleList"
+
+            readonly property int peopleHeight: 90
+
+            Layout.preferredHeight: count*peopleHeight
+            Layout.preferredWidth: parent.width/4
+            anchors.top: parent.top
             model: peopleModel
             interactive: false
             delegate: Rectangle {
                 id: peopleDel
+                objectName: "peopleDel"
 
                 required property string name
                 required property int age
                 required property int index
 
                 width: peopleList.width
-                height: 90
+                height: peopleList.peopleHeight
                 border.color: peopleList.currentIndex === index ? "red" : "black"
-                border.width: peopleList.currentIndex === index ? 3 : 1
+                border.width: peopleList.currentIndex === index ? 4 : 1
 
                 MouseArea {
                     anchors.fill: peopleCol
@@ -130,6 +167,18 @@ FocusScope {
                         verticalAlignment: Text.AlignVCenter
                         text: peopleDel.age
                     }
+                }
+            }
+            Keys.onUpPressed:   decrementCurrentIndex()
+            Keys.onDownPressed: incrementCurrentIndex()
+            KeyNavigation.tab: fruitList
+
+            Rectangle {
+                anchors.fill: peopleList
+                color: "transparent"
+                border {
+                    width: peopleList.activeFocus ? 2 : 0
+                    color: "red"
                 }
             }
         }

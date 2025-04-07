@@ -21,36 +21,36 @@ Window {
     width: 1280
     height: 960
     visible: true
-    title: qsTr("Tab Navigation")
+    title: qsTr("Keyboard Navigation")
 
-    Column {
+    onActiveFocusItemChanged: console.log("-----activeFocusItem", activeFocusItem, activeFocusItem.objectName)
+
+    Row {
         anchors.fill: parent
 
         MenuBar {
             id: header
-            width: parent.width; height: 100
-            orientation: ListView.Horizontal
+            height: parent.height; width: 200
+            orientation: ListView.Vertical
             currentSelection: 0
             tabs: root.pages
+            focus: true
+            KeyNavigation.tab: loader
         }
 
         Item {
-            width: parent.width; height: parent.height - parent.spacing - header.height
+            height: parent.height; width: parent.width - parent.spacing - header.width
 
             Loader {
                 id: loader
-                focus: true
                 anchors {
                     fill: parent
                     margins: 10
                 }
                 source: root.pages[header.currentSelection].url
-                Component.onCompleted: console.log("-----Loader activeFocus", loader.activeFocus)
-                onLoaded: {
-                    item.focus = true;
-                    console.log("-----Loadee activeFocus", item.activeFocus)
-                }
+                onLoaded: item.focus = true;
             }
+            KeyNavigation.tab: header
         }
     }
 }
