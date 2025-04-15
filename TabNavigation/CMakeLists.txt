@@ -20,7 +20,6 @@ qt_add_qml_module(appTabNavigation
         MenuBar.qml
         Page1.qml
         Page2.qml
-        Page3.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

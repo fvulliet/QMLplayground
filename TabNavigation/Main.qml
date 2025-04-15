@@ -11,10 +11,6 @@ Window {
         {
             label: "Page2",
             url: "./Page2.qml"
-        },
-        {
-            label: "Page3",
-            url: "./Page3.qml"
         }
     ]
 
@@ -23,34 +19,34 @@ Window {
     visible: true
     title: qsTr("Keyboard Navigation")
 
-    onActiveFocusItemChanged: console.log("-----activeFocusItem", activeFocusItem, activeFocusItem.objectName)
+    onActiveFocusItemChanged: console.log("-----activeFocusItem:", activeFocusItem)
 
     Row {
+        objectName: "[Row] main row"
         anchors.fill: parent
 
         MenuBar {
             id: header
-            height: parent.height; width: 200
+            objectName: "[MenuBar] header"
+            height: parent.height
+            width: 200
             orientation: ListView.Vertical
             currentSelection: 0
             tabs: root.pages
+            // [nav] --------------------------------
             focus: true
-            KeyNavigation.tab: loader
+            // [nav] --------------------------------
         }
 
-        Item {
-            height: parent.height; width: parent.width - parent.spacing - header.width
-
-            Loader {
-                id: loader
-                anchors {
-                    fill: parent
-                    margins: 10
-                }
-                source: root.pages[header.currentSelection].url
-                onLoaded: item.focus = true;
-            }
-            KeyNavigation.tab: header
+        Loader {
+            id: loader
+            objectName: "[Loader] loader"
+            height: parent.height
+            width: parent.width - parent.spacing - header.width
+            source: root.pages[header.currentSelection].url
+            // [nav] --------------------------------
+            onLoaded: item.focus = true; // necessary for Page2, which is not based on Controls
+            // [nav] --------------------------------
         }
     }
 }
