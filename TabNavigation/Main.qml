@@ -11,6 +11,10 @@ Window {
         {
             label: "Page2",
             url: "./Page2.qml"
+        },
+        {
+            label: "Page3",
+            url: "./Page3.qml"
         }
     ]
 
@@ -19,7 +23,9 @@ Window {
     visible: true
     title: qsTr("Keyboard Navigation")
 
+    // [show nav] --------------------------------
     onActiveFocusItemChanged: console.log("-----activeFocusItem:", activeFocusItem)
+    // [show nav] --------------------------------
 
     Row {
         objectName: "[Row] main row"
@@ -45,6 +51,7 @@ Window {
             width: parent.width - parent.spacing - header.width
             source: root.pages[header.currentSelection].url
             // [nav] --------------------------------
+            activeFocusOnTab: true
             onLoaded: item.focus = true; // necessary for Page2, which is not based on Controls
             // [nav] --------------------------------
         }

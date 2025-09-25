@@ -25,7 +25,9 @@ FocusScope {
             width: parent.width
             height: (parent.height - 2*parent.spacing - 4*parent.spacing)/5
             text: "Button 1"
+            // [show nav] --------------------------------
             highlighted: activeFocus
+            // [show nav] --------------------------------
             // [nav] --------------------------------
             KeyNavigation.up: nextItemInFocusChain(false)
             KeyNavigation.down: nextItemInFocusChain()
@@ -38,7 +40,9 @@ FocusScope {
             width: parent.width
             height: (parent.height - 2*parent.spacing - 4*parent.spacing)/5
             text: "Button 2"
+            // [show nav] --------------------------------
             highlighted: activeFocus
+            // [show nav] --------------------------------
             // [nav] --------------------------------
             KeyNavigation.up: nextItemInFocusChain(false)
             KeyNavigation.down: nextItemInFocusChain()
@@ -54,7 +58,9 @@ FocusScope {
             width: parent.width
             height: (parent.height - 2*parent.spacing - 4*parent.spacing)/5
             text: "Button 3"
+            // [show nav] --------------------------------
             highlighted: activeFocus
+            // [show nav] --------------------------------
             // [nav] --------------------------------
             KeyNavigation.up: nextItemInFocusChain(false)
             KeyNavigation.down: nextItemInFocusChain()
@@ -66,12 +72,13 @@ FocusScope {
             objectName: "[Button] button 4"
             width: parent.width
             height: (parent.height - 2*parent.spacing - 4*parent.spacing)/5
+            // [show nav] --------------------------------
             color: activeFocus ? "darkgray" : "dimgray"
             border {
                 width: activeFocus ? 2 : 0
                 color: "#ff8080"
             }
-
+            // [show nav] --------------------------------
             // [nav] --------------------------------
             activeFocusOnTab: true // so that btn4 is part of the tab focus chain
             KeyNavigation.up: nextItemInFocusChain(false)
@@ -81,7 +88,9 @@ FocusScope {
             Text {
                 anchors.fill: parent
                 text: "Button 4"
+                // [show nav] --------------------------------
                 color: parent.activeFocus ? "black" : "white"
+                // [show nav] --------------------------------
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
@@ -97,7 +106,9 @@ FocusScope {
             width: parent.width
             height: (parent.height - 2*parent.spacing - 4*parent.spacing)/5
             text: "Button 5"
+            // [show nav] --------------------------------
             highlighted: activeFocus
+            // [show nav] --------------------------------
             // [nav] --------------------------------
             KeyNavigation.up: nextItemInFocusChain(false)
             KeyNavigation.down: nextItemInFocusChain()

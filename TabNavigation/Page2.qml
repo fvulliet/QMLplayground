@@ -49,7 +49,7 @@ FocusScope {
         }
     }
 
-    RowLayout {
+    ColumnLayout {
         id: row
         objectName: "[RowLayout] Page3_row"
         anchors {
@@ -64,8 +64,8 @@ FocusScope {
             readonly property int fruitHeight: 60
 
             Layout.preferredHeight: count*fruitHeight
-            Layout.preferredWidth: parent.width/4
-            Layout.alignment: Qt.AlignTop
+            Layout.preferredWidth: parent.width/2
+            Layout.alignment: Qt.AlignHCenter
             model: fruitModel
             interactive: false
             delegate: Rectangle {
@@ -75,7 +75,7 @@ FocusScope {
                 required property string name
                 required property string fruitColor
                 required property int index
-                property int myBorder: 3
+                property int myBorder: 4
 
                 border.width: fruitList.currentIndex === index ? myBorder : 0
                 color: "transparent"
@@ -111,10 +111,12 @@ FocusScope {
             Rectangle {
                 anchors.fill: fruitList
                 color: "transparent"
+                // [show nav] --------------------------------
                 border {
-                    width: fruitList.activeFocus ? 2 : 0
-                    color: "red"
+                    width: fruitList.activeFocus ? 4 : 0
+                    color: "blue"
                 }
+                // [show nav] --------------------------------
             }
         }
         Item {
@@ -132,8 +134,8 @@ FocusScope {
             focus: true // in the FocusScope, peopleList is given the focus by default
             // [nav] --------------------------------
             Layout.preferredHeight: count*peopleHeight
-            Layout.preferredWidth: parent.width/4
-            Layout.alignment: Qt.AlignTop
+            Layout.preferredWidth: parent.width/2
+            Layout.alignment: Qt.AlignHCenter
             model: peopleModel
             interactive: false
             delegate: Rectangle {
@@ -146,8 +148,10 @@ FocusScope {
 
                 width: peopleList.width
                 height: peopleList.peopleHeight
-                border.color: peopleList.currentIndex === index ? "red" : "black"
-                border.width: peopleList.currentIndex === index ? 4 : 1
+                border {
+                    color: "black"
+                    width: peopleList.currentIndex === index ? 4 : 1
+                }
 
                 MouseArea {
                     anchors.fill: peopleCol
@@ -184,10 +188,12 @@ FocusScope {
             Rectangle {
                 anchors.fill: peopleList
                 color: "transparent"
+                // [show nav] --------------------------------
                 border {
-                    width: peopleList.activeFocus ? 2 : 0
-                    color: "red"
+                    width: peopleList.activeFocus ? 4 : 0
+                    color: "blue"
                 }
+                // [show nav] --------------------------------
             }
         }
     }

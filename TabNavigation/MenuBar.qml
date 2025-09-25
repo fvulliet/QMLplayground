@@ -12,10 +12,14 @@ FocusScope {
 
     Rectangle {
         objectName: "[Rectangle] menu bar top rectangle"
-        // [nav] --------------------------------
-        color: root.activeFocus ? "#ff8080" : "white"
-        // [nav] --------------------------------
         anchors.fill: parent
+        color: "transparent"
+        // [show nav] --------------------------------
+        border {
+            width: root.activeFocus ? 4 : 0
+            color: "blue"
+        }
+        // [show nav] --------------------------------
 
         Rectangle {
             objectName: "[Rectangle] menu bar border"
@@ -56,6 +60,12 @@ FocusScope {
                 width: orientation === ListView.Vertical ? ListView.view.width : list.itemWidth
                 height: orientation === ListView.Vertical ? list.itemHeight : ListView.view.height
                 color: list.currentIndex === index ? "black" : "transparent"
+                // [show nav] --------------------------------
+                border {
+                    width: activeFocus ? 4 : 0
+                    color: "blue"
+                }
+                // [show nav] --------------------------------
 
                 MouseArea {
                     anchors.fill: parent
